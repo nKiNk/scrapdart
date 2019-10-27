@@ -13,7 +13,7 @@ start_dt = '20000101' # start date
 crp_cd = '*********' # company code(6 digit for listed companies and 8 digit for private companies which can be found at URL of "기업개황정보")
 bsn_tp = 'D001' # https://dart.fss.or.kr/dsap001/guide.do "상세유형" 참조
 page_set = '100' # 1 page당 출력 리스트
-sub_menu = '2. 세부변동내역'
+sub_menu = '2. 세부변동내역' # change "2. 세부변동내역" to specific submenu
 
 url = f'{base_url}{auth_key}&start_dt={start_dt}&crp_cd={crp_cd}&bsn_tp={bsn_tp}&page_set={page_set}'
 response = requests.get(url)
@@ -36,7 +36,7 @@ for each_doc in page_list:
     print(f"processing {i}/{j}")
     each_url = f"{html_url}{each_doc['rcp_no']}"
     req = requests.get(each_url)
-    dcm_body = req.text.split(f'text: "{sub_menu}"')[1].split("viewDoc(")[1].split(")")[0] # change 세부변동내역 to specific submenu
+    dcm_body = req.text.split(f'text: "{sub_menu}"')[1].split("viewDoc(")[1].split(")")[0] 
     dcm_body_list = dcm_body.replace("'", "").replace(" ", "").split(",")
     each_doc['dcmNo'] = dcm_body_list[1]
     each_doc['eleId'] = dcm_body_list[2]
